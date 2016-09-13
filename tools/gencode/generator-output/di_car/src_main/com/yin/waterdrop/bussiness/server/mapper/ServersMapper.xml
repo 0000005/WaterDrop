@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yin.waterdrop.bussiness.server.dao.ServersDao">
+	<resultMap id="ServersMap" type="com.yin.waterdrop.bussiness.server.entity.Servers">
+		
+		<id column="id" property="id"/>
+		<result column="serverName" property="serverName"/>
+		<result column="serverIp" property="serverIp"/>
+		<result column="serverPort" property="serverPort"/>
+		<result column="serverDescription" property="serverDescription"/>
+		<result column="isProductEnv" property="isProductEnv"/>
+		<result column="disabled" property="disabled"/>
+		<result column="createTime" property="createTime"/>
+		<result column="updateTime" property="updateTime"/>
+	</resultMap>
+
+	<!-- 分页查询 -->
+	<select id="listPage" resultMap="ServersMap"
+		parameterType="com.yin.waterdrop.bussiness.server.entity.Servers">
+		select * from t_servers where 1=1 
+			<if test="servers.id != null">
+				and id=#{  servers.id }  
+			</if>
+			<if test="servers.serverName != null">
+				and serverName=#{  servers.serverName }  
+			</if>
+			<if test="servers.serverIp != null">
+				and serverIp=#{  servers.serverIp }  
+			</if>
+			<if test="servers.serverPort != null">
+				and serverPort=#{  servers.serverPort }  
+			</if>
+			<if test="servers.serverDescription != null">
+				and serverDescription=#{  servers.serverDescription }  
+			</if>
+			<if test="servers.isProductEnv != null">
+				and isProductEnv=#{  servers.isProductEnv }  
+			</if>
+			<if test="servers.disabled != null">
+				and disabled=#{  servers.disabled }  
+			</if>
+			<if test="servers.createTime != null">
+				and createTime=#{  servers.createTime }  
+			</if>
+			<if test="servers.updateTime != null">
+				and updateTime=#{  servers.updateTime }  
+			</if>
+	</select>
+	
+</mapper>

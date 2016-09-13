@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yin.waterdrop.bussiness.server.dao.ServerDao">
+	<resultMap id="ServerMap" type="com.yin.waterdrop.bussiness.server.entity.Server">
+		<id column="id" property="id"/>
+		<result column="server_name" property="serverName"/>
+		<result column="server_ip" property="serverIp"/>
+		<result column="server_port" property="serverPort"/>
+		<result column="server_description" property="serverDescription"/>
+		<result column="is_product_env" property="isProductEnv"/>
+		<result column="disabled" property="disabled"/>
+		<result column="create_time" property="createTime"/>
+		<result column="update_time" property="updateTime"/>
+	</resultMap>
+	
+	<select id="selectByIp" resultMap="ServerMap"
+		parameterType="java.lang.String">
+		select * from t_servers where 1=1 and server_name=#{serverIp}  
+	</select>
+
+	<!-- 分页查询 -->
+	<select id="listPage" resultMap="ServerMap"
+		parameterType="com.yin.waterdrop.bussiness.server.entity.Server">
+		select * from t_servers where 1=1 
+			<if test="server.id != null">
+				and id=#{  server.id }  
+			</if>
+			<if test="server.serverName != null">
+				and server_name=#{  server.serverName }  
+			</if>
+			<if test="server.serverIp != null">
+				and server_ip=#{  server.serverIp }  
+			</if>
+			<if test="server.serverPort != null">
+				and server_port=#{  server.serverPort }  
+			</if>
+			<if test="server.serverDescription != null">
+				and server_description=#{  server.serverDescription }  
+			</if>
+			<if test="server.isProductEnv != null">
+				and is_product_env=#{  server.isProductEnv }  
+			</if>
+			<if test="server.disabled != null">
+				and disabled=#{  server.disabled }  
+			</if>
+			<if test="server.keyWords!=null and server.keyWords != ''">
+				and (locate(#{server.keyWords},server_name) or locate(#{server.keyWords},server_ip)
+				 or locate(#{server.keyWords},server_port) )
+			</if>
+	</select>
+	
+</mapper>

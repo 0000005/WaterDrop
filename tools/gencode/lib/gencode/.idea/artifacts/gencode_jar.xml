@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="gencode:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/gencode_jar</output-path>
+    <root id="archive" name="gencode.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/cn/org/rapid_framework/generator/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>

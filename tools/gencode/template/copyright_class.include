@@ -1,0 +1,7 @@
+/**
+ * ${table.remarks}
+ * @author yang <Auto generate>
+ * @version <#if now??> ${now?string('yyyy-MM-dd HH:mm:ss')}</#if>
+ * @see ${basepackage}.${myParentDir}.${className}
+ */
+ 

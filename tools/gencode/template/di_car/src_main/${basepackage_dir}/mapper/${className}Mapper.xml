@@ -1,0 +1,29 @@
+<#assign myParentDir="entity">
+<#assign className = table.className>   
+<#assign classNameLower = className?uncap_first>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="${basepackage}.dao.${className}Dao">
+	<resultMap id="${className}Map" type="${basepackage}.entity.${className}">
+		
+		<#list table.columns as column>
+		<#if column.isPk()>
+		<id column="${column.sqlName}" property="${column.camelName}"/>
+		<#else>
+		<result column="${column.sqlName}" property="${column.camelName}"/>
+		</#if>
+		</#list>
+	</resultMap>
+
+	<!-- 分页查询 -->
+	<select id="listPage" resultMap="${className}Map"
+		parameterType="${basepackage}.entity.${className}">
+		select * from ${table.sqlName} where 1=1 
+		<#list table.columns as column>
+			<if test="${classNameLower}.${column.camelName} != null">
+				and ${column.sqlName}=${r"#{ "} ${classNameLower}.${column.camelName} ${r"}"}  
+			</if>
+		</#list>
+	</select>
+	
+</mapper>
