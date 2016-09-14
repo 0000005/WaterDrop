@@ -31,5 +31,5 @@ public interface ServerDao extends MyMapper<Server> {
 	 * @param serverIp
 	 * @return
 	 */
-	Server selectByIp(@Param("serverIp")String serverIp);
+	Server selectByIp(@Param("serverIp")String serverIp,@Param("serverPort")String serverPort);
 }

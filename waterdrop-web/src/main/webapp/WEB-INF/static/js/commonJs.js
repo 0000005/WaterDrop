@@ -33,4 +33,3 @@ Date.prototype.pattern=function(fmt) {
     return fmt;         
 }       
      
-var date = new Date();      

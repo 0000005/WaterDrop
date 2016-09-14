@@ -109,14 +109,37 @@ function marquee(height,speed,delay){
 /*左侧菜单-隐藏显示*/
 function displaynavbar(obj){
 	if($(obj).hasClass("open")){
+		//去打开
 		$(obj).removeClass("open");
 		$("body").removeClass("big-page");
 	}else{
+		//去关闭
 		$(obj).addClass("open");
 		$("body").addClass("big-page");
 					
 	}
 }
+/*左侧菜单栏-显示指定是否隐藏或展示*/
+function shownavbar(action)
+{
+	if(action=="show")
+	{
+		if($(".pngfix").hasClass("open"))
+		{
+			$(".pngfix").removeClass("open");
+			$("body").removeClass("big-page");
+		}
+	}
+	else if(action="hide")
+	{
+		if(!$(".pngfix").hasClass("open"))
+		{
+			$(".pngfix").addClass("open");
+			$("body").addClass("big-page");
+		}
+	}
+}
+
 
 /*模拟下拉菜单*/
 jQuery.Huiselect = function(divselectid,inputselectid) {

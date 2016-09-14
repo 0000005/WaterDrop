@@ -35,7 +35,7 @@
         </li>
     </ul>
     <a aria-hidden="false" class="Hui-nav-toggle" href="#"></a></header>
-<aside class="Hui-aside">
+<aside class="Hui-aside" style="background-color: #fafafa;">
     <input runat="server" id="divScrollValue" type="hidden" value=""/>
     <jsp:include page="./common/menu.jsp"></jsp:include>
 </aside>

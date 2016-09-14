@@ -29,7 +29,7 @@ public class Server  implements Serializable{
 	 * id
 	 */
 	@Id
-	private Integer id;
+	private String id;
 	
 	@NotBlank(message = "服务器昵称不能为空")
 	private String serverName;
@@ -47,16 +47,19 @@ public class Server  implements Serializable{
 	private String keyWords;
 
 	
-	//get and set
-	public void setId(Integer id)
-	{
+	
+
+
+	public String getId() {
+		return id;
+	}
+
+
+	public void setId(String id) {
 		this.id = id;
 	}
-	
-	
-	public Integer getId() {
-		return this.id;
-	}
+
+
 	public void setServerName(String serverName) {
 	    
 		    if(StringUtils.isNotBlank(serverName)){

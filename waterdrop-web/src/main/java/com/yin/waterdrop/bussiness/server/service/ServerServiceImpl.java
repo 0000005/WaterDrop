@@ -5,12 +5,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import com.yin.waterdrop.bussiness.server.entity.Server;
 import com.yin.waterdrop.bussiness.server.service.ServerService;
 import com.yin.waterdrop.common.utils.Const;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.yin.waterdrop.frame.pagePlugin.Pagination;
@@ -28,6 +31,7 @@ import com.yin.waterdrop.bussiness.server.dao.ServerDao;
  */
 @Service("serversService")
 public class ServerServiceImpl  extends BaseServiceImpl<Server> implements ServerService {
+	private Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired
     private ServerDao serversDao;
    
@@ -43,31 +47,46 @@ public class ServerServiceImpl  extends BaseServiceImpl<Server> implements Serve
 		map.put(Const.STATUS, -1);
 		try
 		{
-			Server oldServer =serversDao.selectByIp(server.getServerIp());
+			int effectNum =0;
 			String message = ValidatorUtils.validate(server);
 			if(!StringUtils.isBlank(message))
 			{
 				map.put(Const.MSG, message);
+				return map;
 			}
-			else if(oldServer!=null)
+			else if( StringUtils.isNotBlank(server.getId()))
 			{
-				map.put(Const.MSG, "保存失败，此ip已经在库，不能重复添加！");
+				//更新
+				effectNum = updateByPrimaryKey(server);
 			}
 			else
 			{
-				server.setCreateTime(new Timestamp(new Date().getTime()));
-				server.setUpdateTime(new Timestamp(new Date().getTime()));
-				int effectNum =save(server);
-				if(effectNum>0)
+				//插入
+				Server oldServer =serversDao.selectByIp(server.getServerIp(),server.getServerPort());
+				if(oldServer!=null)
 				{
-					map.put(Const.STATUS, 0);
-					map.put(Const.MSG, "保存成功");
+					map.put(Const.MSG, "保存失败，此IP和端口的组合（"+oldServer.getServerName()+"）已经在库，不能重复添加！");
+					return map;
 				}
 				else
 				{
-					map.put(Const.MSG, "保存失败");
+					server.setId(UUID.randomUUID().toString());
+					server.setCreateTime(new Timestamp(new Date().getTime()));
+					server.setUpdateTime(new Timestamp(new Date().getTime()));
+					effectNum =save(server);
 				}
 			}
+			//判断成功
+			if(effectNum>0)
+			{
+				map.put(Const.STATUS, 0);
+				map.put(Const.MSG, "保存成功");
+			}
+			else
+			{
+				map.put(Const.MSG, "保存失败");
+			}
+			
 		}
 		catch(Exception e)
 		{

@@ -10,7 +10,7 @@
 <body>
 	<div class="pd-20">
 		<form action="${path}/servers/save" method="post" class="form form-horizontal" id="fm">
-			<input type="hidden" id="userId" value="${id}" name="id">
+			<input type="hidden" id="id" value="${id}" name="id">
 			<div class="row cl">
 				<label class="form-label col-3"><span class="c-red">*</span>服务器昵称：</label>
 				<div class="formControls col-5">
@@ -41,8 +41,7 @@
 			<div class="row cl">
 				<label class="form-label col-3">服务器备注：</label>
 				<div class="formControls col-5">
-					<textarea type="text" class="textarea" value="${server.serverDescription }"
-						placeholder="服务器备注" id="serverDescription" name="serverDescription"></textarea>
+					<textarea type="text" class="textarea" placeholder="服务器备注" id="serverDescription" name="serverDescription">${server.serverDescription }</textarea>
 				</div>
 				<div class="col-4"></div>
 			</div>
@@ -51,8 +50,8 @@
 				<div class="formControls col-5">
 					<span class="select-box" style="width: 150px;"> 
 						<select class="select" name="isProductEnv" size="1">
-							<option value="0" ${server.value eq 0? 'selected' : '' }>否</option>
-							<option value="1" ${server.value eq 1? 'selected' : '' }>是</option>
+							<option value="0" ${server.isProductEnv eq 0? 'selected' : '' }>否</option>
+							<option value="1" ${server.isProductEnv eq 1? 'selected' : '' }>是</option>
 						</select>
 					</span>
 				</div>
@@ -62,8 +61,8 @@
 				<div class="formControls col-5">
 					<span class="select-box" style="width: 150px;"> 
 						<select class="select" name="disabled" size="1">
-							<option value="0" ${server.value eq 0? 'selected' : '' }>可用</option>
-							<option value="1" ${server.value eq 1? 'selected' : '' }>不可用</option>
+							<option value="0" ${server.disabled eq 0? 'selected' : '' }>可用</option>
+							<option value="1" ${server.disabled eq 1? 'selected' : '' }>不可用</option>
 						</select>
 					</span>
 				</div>

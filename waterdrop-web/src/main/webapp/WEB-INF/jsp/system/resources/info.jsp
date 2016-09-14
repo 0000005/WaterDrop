@@ -47,7 +47,7 @@
         <div class="formControls col-5">
             <span class="select-box" style="width: 150px;">
             <select name="type" class="select"  disabled="disabled">
-                <c:forEach items="${disabledList }" var="l">
+                <c:forEach items="${rTypeList }" var="l">
                     <option value="${l.value }">${l.label }</option>
                 </c:forEach>
             </select>

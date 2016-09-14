@@ -46,7 +46,7 @@
 						<th width="130">服务器昵称</th>
 						<th width="110">服务器IP</th>
 						<th>服务器备注</th>
-						<th width="100">是否为生产环境</th>
+						<th width="80">生产环境</th>
 						<th width="70">是否启用</th>
 						<th width="150">创建时间</th>
 						<th width="150">更新时间</th>
@@ -69,7 +69,7 @@
 							<td>{{l.serverIp}}:{{l.serverPort}}</td>
 							<td>{{l.serverDescription }}</td>
 							<td class="td-status">
-								<span class="label {{ l.isProductEnv==0 ?'label-success':''}} radius">{{ l.isProductEnv==0 ?'是':'否' }}</span>
+								<span class="label {{ l.isProductEnv==1 ?'label-success':''}} radius">{{ l.isProductEnv==1 ?'是':'否' }}</span>
 							</td>
 							<td class="td-status">
 								<span class="label {{ l.disabled==0 ?'label-success':''}} radius">{{ l.disabled==0 ?'启用':'禁用' }}</span>
@@ -78,13 +78,12 @@
 							<td>{{new Date(l.updateTime).pattern("yyyy-MM-dd hh:mm:ss") }}</td>
 							<shiro:hasPermission name="sys:dict:update">
 							<td class="td-manage">
-								<a style="text-decoration: none"
-								class="statusOperate" href="javascript:;" itemId="{{l.id}}" status="{{l.disabled}}"
-								title="{{ l.disabled==0 ?'禁用':'启用'}}"><i class="Hui-iconfont {{ l.disabled==0 ?'Hui-iconfont-shenhe-tingyong':'Hui-iconfont-shenhe-tongguo'}}"> </i></a> <a
-								title="编辑" href="javascript:;"
-								onclick="layer_show('修改字典','${path }/dict/add?id={{ l.id}}','800','500')"
-								class="ml-5" style="text-decoration: none"><i
-									class="Hui-iconfont">&#xe6df;</i></a>
+								<a title="管理" href="javascript:;"
+								onclick="document.location.href=('${path }/servers/manage/{{l.id}}')"
+								class="ml-5" style="text-decoration: none"><i class="Hui-iconfont">&#xe61d;</i></a>
+								<a title="编辑" href="javascript:;"
+								onclick="layer_show('修改服务器','${path }/servers/add?id={{l.id}}','800','500')"
+								class="ml-5" style="text-decoration: none"><i class="Hui-iconfont">&#xe6df;</i></a>
 							</td>
 							</shiro:hasPermission>
 						</tr>
@@ -99,33 +98,7 @@
 			$("[name='page']").val(1);
 			initPage("listForm", "demo", "view", "page");
 		})
-		/*管理员-停用*/
-		$(document).on("click", ".statusOperate", function() {
-			var status = $(this).attr("status");
-			var id = $(this).attr("itemId");
-			var statusText = status == 0 ? '停用' : '启用';
-			var confirmText = '确认要' + statusText + '吗？';
-			var $this = $(this);
-			layer.confirm(confirmText, function(index) {
-				$.getJSON("${path}/dict/save", {
-					id : id,
-					disabled : (status == 0 ? 1 : 0)
-				}, function(data) {
-					if (data.status == 0) {
-						layer.msg(data.msg, {
-							icon : 6,
-							time : 1000
-						});
-					} else {
-						layer.msg(data.msg, {
-							icon : 5,
-							time : 1000
-						});
-					}
-					initPage("listForm", "demo", "view", "page");
-				})
-			});
-		})
+		
 	</script>
 </body>
 </html>
