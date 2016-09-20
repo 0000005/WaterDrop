@@ -7,6 +7,9 @@
         <dependent-module archiveName="waterdrop-frame-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/waterdrop-frame/waterdrop-frame">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="waterdrop-rpc-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/waterdrop-rpc/waterdrop-rpc">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="java-output-path" value="/waterdrop-web/target/classes"/>
         <property name="context-root" value="waterdrop-web"/>
     </wb-module>
