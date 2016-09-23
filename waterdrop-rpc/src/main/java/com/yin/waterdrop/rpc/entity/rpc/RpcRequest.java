@@ -1,4 +1,4 @@
-package com.yin.waterdrop.rpc.entity;
+package com.yin.waterdrop.rpc.entity.rpc;
 
 public class RpcRequest {
 

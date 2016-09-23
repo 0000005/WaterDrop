@@ -1,6 +1,11 @@
 package com.yin.waterdrop.rpc;
 
+import java.util.concurrent.ExecutionException;
+
 import com.yin.waterdrop.rpc.annotation.RpcService;
+import com.yin.waterdrop.rpc.client.Proxy.ObjectProxy;
+import com.yin.waterdrop.rpc.future.TaskPromise;
+import com.yin.waterdrop.rpc.rpcInterface.StatusInfoService;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -9,33 +14,18 @@ import junit.framework.TestSuite;
 /**
  * Unit test for simple App.
  */
-public class AppTest 
-    extends TestCase
+public class AppTest  extends TestCase
 {
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
+    public static void main(String[] args) throws InterruptedException, ExecutionException 
     {
-        super( testName );
-    }
-
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
-    }
-
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
-    }
+		//SysInfoService proxyService=(SysInfoService) ObjectProxy.newProxyInstance(SysInfoService.class);
+		//String result=proxyService.reportSysInfo("time");
+		//System.out.println("rpc call return :"+result);
+    	
+    	
+    	ObjectProxy<StatusInfoService> objectProxy = new ObjectProxy<StatusInfoService>(StatusInfoService.class);
+    	TaskPromise promise =objectProxy.AsyncCall("reportSysInfo", "time2");
+    	System.out.println("result:"+promise.getResponseResult());
+	}
     
 }

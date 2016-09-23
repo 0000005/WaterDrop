@@ -13,6 +13,7 @@
 		<module>waterdrop-frame</module>
 		<module>waterdrop-web</module>
     <module>waterdrop-rpc</module>
+    <module>waterdrop-spy</module>
   </modules>
 
 	<properties>

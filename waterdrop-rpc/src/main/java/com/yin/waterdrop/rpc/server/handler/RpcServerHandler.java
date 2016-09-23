@@ -6,8 +6,8 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.yin.waterdrop.rpc.entity.RpcRequest;
-import com.yin.waterdrop.rpc.entity.RpcResponse;
+import com.yin.waterdrop.rpc.entity.rpc.RpcRequest;
+import com.yin.waterdrop.rpc.entity.rpc.RpcResponse;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;

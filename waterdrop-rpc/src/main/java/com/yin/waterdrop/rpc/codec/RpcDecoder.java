@@ -1,5 +1,6 @@
 package com.yin.waterdrop.rpc.codec;
 
+import java.util.Arrays;
 import java.util.List;
 
 import io.netty.buffer.ByteBuf;
@@ -34,7 +35,7 @@ public class RpcDecoder extends ByteToMessageDecoder {
 		byte [] data =new byte[dataLength];
 		in.readBytes(data);
 		//反序列化
-		Object obj=SerializationUtil.deserialize(data, processClass);
+		Object obj=SerializationUtil.deserializer(data, processClass);
 		out.add(obj);
 	}
 

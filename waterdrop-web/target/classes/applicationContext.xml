@@ -45,7 +45,7 @@
     </bean>
 
     
-    <aop:aspectj-autoproxy/>
+    <aop:aspectj-autoproxy  proxy-target-class="true"/>
 
     <aop:config>
         <aop:pointcut id="transactionPointcut" expression="execution(* com.yin.waterdrop.*.*.service.*Service*.*(..))"/>
