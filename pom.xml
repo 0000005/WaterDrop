@@ -35,7 +35,7 @@
 		<mybatis-spring.version>1.2.3</mybatis-spring.version>
 		<hibernate.version>5.1.2.Final</hibernate.version>
 		<quartz.version>2.2.1</quartz.version>
-		<druid.version>1.0.11</druid.version>
+		<druid.version>1.0.26</druid.version>
 		<shiro.version>1.2.3</shiro.version>
 		<logback.version>1.0.13</logback.version>
 	</properties>

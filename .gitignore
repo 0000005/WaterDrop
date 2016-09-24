@@ -1,1 +1,34 @@
-/target/
+# Package Files #
+*.jar
+*.war
+*.ear
+*.class
+ 
+# ignore eclipse files
+/waterdrop-frame/.project/*
+/waterdrop-frame/.classpath/*
+/waterdrop-frame/.settings/*
+/waterdrop-frame/.metadata/*
+/waterdrop-frame/target/*
+/waterdrop-frame/.settings/*
+
+/waterdrop-web/.project/*
+/waterdrop-web/.classpath/*
+/waterdrop-web/.settings/*
+/waterdrop-web/.metadata/*
+/waterdrop-web/target/*
+/waterdrop-web/.settings/*
+
+/waterdrop-rpc/.project/*
+/waterdrop-rpc/.classpath/*
+/waterdrop-rpc/.settings/*
+/waterdrop-rpc/.metadata/*
+/waterdrop-rpc/target/*
+/waterdrop-rpc/.settings/*
+
+/waterdrop-spy/.project/*
+/waterdrop-spy/.classpath/*
+/waterdrop-spy/.settings/*
+/waterdrop-spy/.metadata/*
+/waterdrop-spy/target/*
+/waterdrop-spy/.settings/*
