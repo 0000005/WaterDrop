@@ -15,12 +15,20 @@ import com.yin.waterdrop.rpc.future.TaskPromise;
 public class ObjectProxy<T> implements InvocationHandler {
 
 	private Class<T> clazz;
+	private String host;
+	private int port;
 
-    public ObjectProxy(Class<T> clazz) {
-        this.clazz = clazz;
-    }
 
-    //同步方法
+    public ObjectProxy(Class<T> clazz, String host, int port) 
+    {
+		this.clazz = clazz;
+		this.host = host;
+		this.port = port;
+	}
+
+
+
+	//同步方法
 	@Override
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable 
 	{
@@ -39,7 +47,10 @@ public class ObjectProxy<T> implements InvocationHandler {
             }
         }
 		
+		
 		RpcRequest request = new RpcRequest();
+		request.setHost(host);
+		request.setPort(port);
 	    request.setRequestId(UUID.randomUUID().toString());
 	    request.setClassName(method.getDeclaringClass().getName());
 	    request.setMethodName(method.getName());
@@ -63,6 +74,8 @@ public class ObjectProxy<T> implements InvocationHandler {
 	public TaskPromise AsyncCall(String funcName, Object... args) throws InterruptedException
 	{
 		RpcRequest request = new RpcRequest();
+		request.setHost(host);
+		request.setPort(port);
 	    request.setRequestId(UUID.randomUUID().toString());
 	    request.setClassName(this.clazz.getName());
 	    request.setMethodName(funcName);
@@ -124,11 +137,12 @@ public class ObjectProxy<T> implements InvocationHandler {
 	
 	
 	@SuppressWarnings("unchecked")
-    public static <T> T newProxyInstance(Class<T> interfaceClass) {
+    public static <T> T newProxyInstance(Class<T> interfaceClass,String host,int port) 
+	{
         return (T) Proxy.newProxyInstance(
                 interfaceClass.getClassLoader(),
                 new Class<?>[]{interfaceClass},
-                new ObjectProxy<T>(interfaceClass)
+                new ObjectProxy<T>(interfaceClass,host,port)
         );
     }
 

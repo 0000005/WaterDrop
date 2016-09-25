@@ -5,6 +5,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.config.Task;
 
 import com.yin.waterdrop.rpc.client.handler.RpcClientHandler;
@@ -29,11 +31,12 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 public class RpcClient 
 {
 	private static ExecutorService executor = Executors.newCachedThreadPool();
+	private Logger logger = LoggerFactory.getLogger(getClass());
 	
 	public TaskPromise send(RpcRequest req) throws InterruptedException
 	{
 		TaskPromise promise = new DefaultTaskPromise();
-		RpcClient.submit(new SendThread(req,promise));
+		FutureTask futureTask =RpcClient.submit(new SendThread(req,promise));
 		return promise;
 	}
 	
@@ -81,8 +84,13 @@ public class RpcClient
 				b.group(worker);
 				b.channel(NioSocketChannel.class);
 				b.handler(new RpcClientInitializer(req,promise));
-				ChannelFuture future=b.connect("127.0.0.1", 8088).sync();
+				ChannelFuture future=b.connect(req.getHost(), req.getPort()).sync();
 				future.channel().closeFuture().sync();
+			}
+			catch(Exception e)
+			{
+				promise.setFailure(e);
+				logger.error("调用远程目标出错!",e);
 			}
 			finally
 			{

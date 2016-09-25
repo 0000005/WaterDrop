@@ -36,10 +36,16 @@ public class Server  implements Serializable{
 	@Pattern(regexp="(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)",message="请填写正确的IP")
 	private String serverIp;
 	@NotBlank(message = "服务器端口不能为空")
+	@Pattern(regexp="^[1-9]\\d*$",message="端口号格式不正确")
 	private String serverPort;
 	private String serverDescription;
 	private Integer isProductEnv;
 	private Integer disabled;
+	private String harddiskSize;
+	private String osName;
+	private String cpuInfo;
+	private String jdkVersion;
+	private String memorySize;
 	private Timestamp createTime;
 	private Timestamp updateTime;
 	//columns END 数据库字段结束
@@ -152,17 +158,56 @@ public class Server  implements Serializable{
 		setupdateTime(DateUtils.convertString2Date(FORMAT_UPDATETIME,value));
 	}*/
 	
+	
 	public void setUpdateTime(Timestamp updateTime)
 	{
 		this.updateTime = updateTime;
 	}
 	
-	
+	public String getHarddiskSize() {
+		return harddiskSize;
+	}
+
+	public void setHarddiskSize(String harddiskSize) {
+		this.harddiskSize = harddiskSize;
+	}
+
+	public String getOsName() {
+		return osName;
+	}
+
+	public void setOsName(String osName) {
+		this.osName = osName;
+	}
+
+	public String getCpuInfo() {
+		return cpuInfo;
+	}
+
+	public void setCpuInfo(String cpuInfo) {
+		this.cpuInfo = cpuInfo;
+	}
+
+	public String getJdkVersion() {
+		return jdkVersion;
+	}
+
+	public void setJdkVersion(String jdkVersion) {
+		this.jdkVersion = jdkVersion;
+	}
+
+	public String getMemorySize() {
+		return memorySize;
+	}
+
+	public void setMemorySize(String memorySize) {
+		this.memorySize = memorySize;
+	}
+
 	public Timestamp getUpdateTime()
 	{
 		return updateTime;
 	}
-	
 	
 	
 	public String getKeyWords() {

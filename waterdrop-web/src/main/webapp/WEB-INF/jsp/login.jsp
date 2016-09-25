@@ -44,9 +44,9 @@
             <i class="icon-remove"></i>错误状态提示
         </div>
         <input type="text" name="username" class="username"
-               placeholder="请输入您的用户名！" >
+               placeholder="用户名" >
         <input type="password" name="password" class="password"
-               placeholder="请输入您的用户密码！" >
+               placeholder="密码" >
 
         <input type="Captcha" class="captcha" name="captcha" placeholder="请输入验证码！">
 

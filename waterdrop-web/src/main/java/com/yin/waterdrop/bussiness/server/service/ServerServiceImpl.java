@@ -16,16 +16,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.yin.waterdrop.frame.pagePlugin.Pagination;
 import com.yin.waterdrop.frame.service.impl.BaseServiceImpl;
 import com.yin.waterdrop.frame.utils.ValidatorUtils;
+import com.yin.waterdrop.rpc.client.Proxy.ObjectProxy;
+import com.yin.waterdrop.rpc.entity.itf.SysInfoEntity;
+import com.yin.waterdrop.rpc.rpcInterface.StatusInfoService;
+import com.yin.waterdrop.rpc.rpcInterface.SysInfoService;
 import com.yin.waterdrop.bussiness.server.dao.ServerDao;
 
 
 
 /**
  * 
- * @author yang <Auto generate>
+ * @author JerryYin <Auto generate>
  * @version  2016-09-13 13:20:06
  * @see com.yin.waterdrop.bussiness.server.service.Server.Servers
  */
@@ -54,28 +59,50 @@ public class ServerServiceImpl  extends BaseServiceImpl<Server> implements Serve
 				map.put(Const.MSG, message);
 				return map;
 			}
-			else if( StringUtils.isNotBlank(server.getId()))
-			{
-				//更新
-				effectNum = updateByPrimaryKey(server);
-			}
 			else
 			{
-				//插入
-				Server oldServer =serversDao.selectByIp(server.getServerIp(),server.getServerPort());
-				if(oldServer!=null)
+				try
 				{
-					map.put(Const.MSG, "保存失败，此IP和端口的组合（"+oldServer.getServerName()+"）已经在库，不能重复添加！");
+					//链接探针检测服务器有效性
+					SysInfoService sysInfoService=ObjectProxy.newProxyInstance(SysInfoService.class,server.getServerIp(), Integer.valueOf(server.getServerPort()));
+					SysInfoEntity sysInfoEntity=sysInfoService.getSysInfo();
+					if(sysInfoEntity==null)
+					{
+						map.put(Const.MSG, "保存失败，无法链接到主机！");
+						return map;
+					}
+				}
+				catch(Exception e)
+				{
+					map.put(Const.MSG, "保存失败，无法链接到主机！");
 					return map;
+				}
+				
+				
+				if( StringUtils.isNotBlank(server.getId()))
+				{
+					//更新
+					effectNum = updateByPrimaryKey(server);
 				}
 				else
 				{
-					server.setId(UUID.randomUUID().toString());
-					server.setCreateTime(new Timestamp(new Date().getTime()));
-					server.setUpdateTime(new Timestamp(new Date().getTime()));
-					effectNum =save(server);
+					//插入
+					Server oldServer =serversDao.selectByIp(server.getServerIp(),server.getServerPort());
+					if(oldServer!=null)
+					{
+						map.put(Const.MSG, "保存失败，此IP和端口的组合（"+oldServer.getServerName()+"）已经在库，不能重复添加！");
+						return map;
+					}
+					else
+					{
+						server.setId(UUID.randomUUID().toString());
+						server.setCreateTime(new Timestamp(new Date().getTime()));
+						server.setUpdateTime(new Timestamp(new Date().getTime()));
+						effectNum =save(server);
+					}
 				}
 			}
+			
 			//判断成功
 			if(effectNum>0)
 			{

@@ -19,26 +19,38 @@
 				<form action="" method="post" class="form form-horizontal pd-20" id="demoform-1">
 					<legend>基本信息</legend>
 					<div class="row cl">
-						<label class="form-label col-xs-4 col-sm-3">服务器昵称：</label>
-						<div class="formControls col-xs-8 col-sm-9">
+						<label class="form-label col-xs-4 col-sm-4">服务器昵称：</label>
+						<div class="formControls col-xs-8 col-sm-8">
 							<input type="text" class="input-text" autocomplete="off" placeholder="服务器昵称">
 						</div>
 					</div>
 					<div class="row cl">
-						<label class="form-label col-xs-4 col-sm-3">IP地址：</label>
-						<div class="formControls col-xs-8 col-sm-9">
+						<label class="form-label col-xs-4 col-sm-4">IP地址：</label>
+						<div class="formControls col-xs-8 col-sm-8">
 							<input type="text" class="input-text" autocomplete="off" placeholder="IP地址">
 						</div>
 					</div>
 					<div class="row cl">
-						<label class="form-label col-xs-4 col-sm-3">服务器端口：</label>
-						<div class="formControls col-xs-8 col-sm-9">
+						<label class="form-label col-xs-4 col-sm-4">服务器端口：</label>
+						<div class="formControls col-xs-8 col-sm-8">
 							<input type="text" class="input-text" autocomplete="off" placeholder="端口">
 						</div>
 					</div>
 					<div class="row cl">
-						<label class="form-label col-xs-4 col-sm-3">是否启用：</label>
-						<div class="formControls skin-minimal col-xs-8 col-sm-9">
+						<label class="form-label col-xs-4 col-sm-4">是否启用：</label>
+						<div class="formControls skin-minimal col-xs-8 col-sm-8">
+							  <span class="select-box">
+								  <select class="select" size="1" name="demo1">
+								    <option value="" selected>请选择</option>
+								    <option value="1">否</option>
+								    <option value="2">是</option>
+								  </select>
+							  </span>
+						</div>
+					</div>
+					<div class="row cl">
+						<label class="form-label col-xs-4 col-sm-4">是否为生成环境：</label>
+						<div class="formControls skin-minimal col-xs-8 col-sm-8">
 							  <span class="select-box">
 								  <select class="select" size="1" name="demo1">
 								    <option value="" selected>请选择</option>
@@ -50,21 +62,8 @@
 						</div>
 					</div>
 					<div class="row cl">
-						<label class="form-label col-xs-4 col-sm-3">是否为生成环境：</label>
-						<div class="formControls skin-minimal col-xs-8 col-sm-9">
-							  <span class="select-box">
-								  <select class="select" size="1" name="demo1">
-								    <option value="" selected>请选择</option>
-								    <option value="1">否</option>
-								    <option value="2">是</option>
-								  </select>
-							  </span>
-
-						</div>
-					</div>
-					<div class="row cl">
-						<label class="form-label col-xs-4 col-sm-3">服务器备注：</label>
-						<div class="formControls col-xs-8 col-sm-9">
+						<label class="form-label col-xs-4 col-sm-4">服务器备注：</label>
+						<div class="formControls col-xs-8 col-sm-8">
 							<textarea class="textarea" placeholder="说点什么..." rows="" cols="" name=""></textarea>
 						</div>
 					</div>
@@ -107,12 +106,8 @@
 					</div>
 				</div>
 				<div class="row cl">
-					<div class="col-xs-12 col-sm-6">
+					<div class="col-xs-12 col-sm-12">
 						<div id="networkChart"  style="width:100%;height:250px;">
-						</div>
-					</div>
-					<div class="col-xs-12 col-sm-6">
-						<div id="ioChart"  style="width:100%;height:250px;">
 						</div>
 					</div>
 				</div>
@@ -356,76 +351,9 @@
 
     networkChart.setOption(networkOption,true);
     
-    var ioChart = echarts.init(document.getElementById('ioChart'), 'macarons');
-    var ioOption = 
-    {
-        title: {
-            text: 'IO占用率'
-        },
-        tooltip : {
-            trigger: 'axis',
-            formatter : function (params) {
-                var date = new Date(params[0].data[0]);
-                data = date.getFullYear() + '-'
-                       + (date.getMonth() + 1) + '-'
-                       + date.getDate() + ' '
-                       + date.getHours() + ':'
-                       + date.getMinutes();
-                return data + '<br/>IO占用率'
-                       + params[0].data[1]
-            }
-        },
-        xAxis: {
-        	type:'time',
-            axisLine:{
-            	show:false
-            },
-            axisTick:{
-            	show:false
-            },
-            axisLabel:{
-            	formatter:function (value, index) {
-            		 var date = new Date(value);
-                     return date.pattern("MM-dd hh:mm");
-            	}
-            }
-        },
-        yAxis: {
-        	axisLine:{
-            	show:false
-            },
-            axisTick:{
-            	show:false
-            }
-        },
-        series: 
-        [{
-            name: 'IO占用率',
-            type: 'line',
-            symbolSize: function (value){
-                return Math.round(value[2]/10) + 2;
-            },
-            data: (function () {
-                var d = [];
-                var len = 0;
-                var now = new Date();
-                var value;
-                while (len++ <20) {
-                    d.push([
-                        new Date(2014, 9, 1, 0, len * 10000),
-                        (Math.random()*100).toFixed(2) - 0
-                    ]);
-                }
-                return d;
-            })()
-        }]
-    };
-
-    ioChart.setOption(ioOption,true);
-    
     
     //四表联动
-	echarts.connect([cpuChart, memoryChart,ioChart,networkChart]);
+	echarts.connect([cpuChart, memoryChart,networkChart]);
     
 	/********图表结束****************/
 	</script>

@@ -2,13 +2,32 @@ package com.yin.waterdrop.rpc.entity.rpc;
 
 public class RpcRequest {
 
+	private String host;
+	private int port;
     private String requestId;
     private String className;
     private String methodName;
     private Class<?>[] parameterTypes;
     private Object[] parameters;
 
-    public String getRequestId() {
+    
+    public String getHost() {
+		return host;
+	}
+
+	public void setHost(String host) {
+		this.host = host;
+	}
+
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
+	}
+
+	public String getRequestId() {
         return requestId;
     }
 
